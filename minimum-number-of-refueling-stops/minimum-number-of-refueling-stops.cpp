@@ -1,24 +1,66 @@
-class Solution {
+class Solution 
+{
 public:
-    // TIME COMPLEXITY:- O(NLOG(N))
-    // SPACE COMPLEXITY:- O(N)
-    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations)
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) 
     {
-        priority_queue<int> Fuels; // to keep track of gases being untaken in non increasing order
         stations.push_back({target,0});
-        int max_reachable=startFuel,ans=0;
-        for(int i=0;i<stations.size();i++){
-            // refuel your vehicle till max_reachable becomes atleast current station coordinate
-            while(!Fuels.empty() and max_reachable<stations[i][0]){
-                ans++;
-                max_reachable+=Fuels.top();
-                Fuels.pop();
-            }
-            // if still max_reachable is not atleast current station coordinate, output -1
-            if(max_reachable<stations[i][0])
-                return -1;
-            Fuels.push(stations[i][1]);
+        
+        // for(int i=0;i<stations.size();i++)
+        // {
+        //     vector<int> h = stations[i];
+        //     cout<<h[0]<<" "<<h[1]<<endl;
+        // }
+        
+        if(startFuel >= target)
+        {
+            return 0;
         }
+        
+        priority_queue<int> pq;
+        
+        int curr = startFuel;
+        int ans = 0;
+        int prev = 0;
+        
+        for(int i=0;i<stations.size();i++)
+        {
+            int currLoc = stations[i][0];
+            int fuel = stations[i][1];
+            
+            int need = currLoc - prev;
+            prev = currLoc;
+            cout<<curr<<" "<<need<<" "<<ans<<endl;
+            if(curr >= need)
+            {
+                curr -= need;
+                pq.push(fuel);
+            }
+            else
+            {
+                
+                if(pq.size() == 0)
+                {
+                    return -1;
+                }
+                
+                while(!pq.empty() and curr < need)
+                {
+                    curr += pq.top();
+                    pq.pop();
+                    ans++;
+                }
+                
+                if(pq.size() == 0 and curr < need)
+                {
+                    return -1;
+                }
+                
+                curr -= need;                
+                pq.push(fuel);
+                
+            }
+        }
+        
         return ans;
     }
 };
