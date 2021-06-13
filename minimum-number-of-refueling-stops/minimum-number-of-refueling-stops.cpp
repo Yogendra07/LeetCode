@@ -5,12 +5,6 @@ public:
     {
         stations.push_back({target,0});
         
-        // for(int i=0;i<stations.size();i++)
-        // {
-        //     vector<int> h = stations[i];
-        //     cout<<h[0]<<" "<<h[1]<<endl;
-        // }
-        
         if(startFuel >= target)
         {
             return 0;
@@ -29,7 +23,7 @@ public:
             
             int need = currLoc - prev;
             prev = currLoc;
-            cout<<curr<<" "<<need<<" "<<ans<<endl;
+
             if(curr >= need)
             {
                 curr -= need;
