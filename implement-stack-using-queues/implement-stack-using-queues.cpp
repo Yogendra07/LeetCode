@@ -1,9 +1,8 @@
-class MyStack {
+class MyStack 
+{
 public:
     /** Initialize your data structure here. */
-    queue<int> q1;
-    queue<int> q2;
-    
+    queue<int> q;
     MyStack() 
     {
         
@@ -12,42 +11,48 @@ public:
     /** Push element x onto stack. */
     void push(int x) 
     {
-        q1.push(x);    
+        q.push(x);
     }
     
     /** Removes the element on top of the stack and returns that element. */
     int pop() 
     {
-        while(q1.size() != 1)
+        int n = q.size();
+        int val = 0;
+        n = n-1;
+        while(n--)
         {
-            int val = q1.front();
-            q1.pop();
-            q2.push(val);
+            val = q.front();
+            q.pop();
+            q.push(val);
         }
         
-        int ans = q1.front();
-        q1.pop();
+        val = q.front();
+        q.pop();
         
-        while(!q2.empty())
-        {
-            int val1 = q2.front();
-            q1.push(val1);
-            q2.pop();
-        }
-        
-        return ans;
+        return val;
     }
     
     /** Get the top element. */
     int top() 
     {
-        return q1.back();    
+        int n = q.size();
+        int val = 0;
+        
+        while(n--)
+        {
+            val = q.front();
+            q.pop();
+            q.push(val);
+        }
+        
+        return val;    
     }
     
     /** Returns whether the stack is empty. */
     bool empty() 
     {
-        return q1.size() == 0;    
+        return q.size() == 0;    
     }
 };
 
